@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>YoStore — Objects worth keeping</title>
+        <meta
+            name="description"
+            content="YoStore is an editorial commerce demo: considered objects, honest materials, and a storefront built to be enjoyed."
+        />
+        <meta
+            name="theme-color"
+            content="#fbf9f4"
+            media="(prefers-color-scheme: light)"
+        />
+        <meta
+            name="theme-color"
+            content="#12100e"
+            media="(prefers-color-scheme: dark)"
+        />
+        <meta property="og:title" content="YoStore — Objects worth keeping" />
+        <meta
+            property="og:description"
+            content="An editorial commerce demo storefront. Browse considered products, follow demo orders, and try the full shopping flow."
+        />
+        <meta property="og:type" content="website" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <script>
+            // Applies the persisted theme before first paint to avoid a flash of the
+            // wrong theme. Mirrors the storage envelope used by src/utils/storage.
+            (function () {
+                try {
+                    var raw = localStorage.getItem("yostore:theme");
+                    var parsed = raw ? JSON.parse(raw) : null;
+                    var theme =
+                        parsed &&
+                        (parsed.data === "light" || parsed.data === "dark")
+                            ? parsed.data
+                            : null;
+                    if (!theme) {
+                        theme =
+                            window.matchMedia &&
+                            window.matchMedia("(prefers-color-scheme: dark)")
+                                .matches
+                                ? "dark"
+                                : "light";
+                    }
+                    if (theme === "dark")
+                        document.documentElement.classList.add("dark");
+                    document.documentElement.dataset.theme = theme;
+                } catch (e) {
+                    /* storage unavailable — stay on the light default */
+                }
+            })();
+        </script>
+    </head>
+    <body>
+        <div id="root"></div>
+        <script type="module" src="/src/main.jsx"></script>
+    </body>
+</html>
